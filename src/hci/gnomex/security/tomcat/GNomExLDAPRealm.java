@@ -30,8 +30,11 @@ import javax.sql.DataSource;
 
 import org.apache.catalina.realm.GenericPrincipal;
 import org.apache.catalina.realm.RealmBase;
+import org.apache.log4j.Logger;
 
 public class GNomExLDAPRealm extends RealmBase {
+
+	private static final Logger LOG = Logger.getLogger(GNomExLDAPRealm.class);
 
 	private String username;
 	private String password;
@@ -64,6 +67,7 @@ public class GNomExLDAPRealm extends RealmBase {
 
 	@Override
 	public Principal authenticate(String username, String credentials) {
+		LOG.debug("Authenticating user: " + username);
 		this.username = username;
 		this.password = credentials;
 
@@ -184,6 +188,7 @@ public class GNomExLDAPRealm extends RealmBase {
 	}
 
 	public void setLdap_user_attributes(String ldap_user_attributes) {
+		LOG.debug("Setting LDAP user attributes: " + ldap_user_attributes);
 		this.ldap_user_attributes = ldap_user_attributes;
 
 		// Populate user attributes and values into a may (key=attribute, value=attribute value)
@@ -223,6 +228,7 @@ public class GNomExLDAPRealm extends RealmBase {
 		boolean isAuthenticated = false;
 
 		if (this.isGNomExUniversityUser()) {
+			LOG.debug("GnomEx University User: "+username);
 			// If this is a GNomEx user with a uNID, check the credentials
 			// against the Univ of Utah LDAP. If not found there,
 			// try HCI directory services.
@@ -247,6 +253,7 @@ public class GNomExLDAPRealm extends RealmBase {
 	}
 
 	private boolean checkLDAPCredentials() {
+		LOG.debug("Checking LDAP credentials for user: "+ username);
 
 		if (username == null || password == null || ldap_provider_url == null || ldap_provider_url.length() == 0) {
 			return false;
@@ -279,7 +286,7 @@ public class GNomExLDAPRealm extends RealmBase {
 			}
 
 		} catch (Exception e) {
-			System.out.println("ERROR in checkLDAPCredentials: " + e);
+			LOG.error("ERROR in checkLDAPCredentials: "+ e.getMessage(),e);
 			isAuthenticated = false;
 		}
 		return isAuthenticated;
@@ -351,6 +358,7 @@ public class GNomExLDAPRealm extends RealmBase {
 
 	private boolean isGNomExUniversityUser() {
 
+		LOG.debug("Checking if "+username+" is a GnomEx U of U user.");
 		boolean isGNomExUser = false;
 
 		Connection con = null;
@@ -387,6 +395,7 @@ public class GNomExLDAPRealm extends RealmBase {
 
 	private boolean isAuthenticatedGNomExExternalUser() {
 
+		LOG.debug("Checking if "+username+" is an authenticated external GnomEx user.");
 		boolean isAuthenticated = false;
 
 		Connection con = null;

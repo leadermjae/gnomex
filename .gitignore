@@ -1,4 +1,39 @@
+# General
+glsave/
+build/
+dist/
+build-eclipse/
+bin/
+build.ant/
+
+# jS Related
+bower_components/
+node_modules/
+
+# Gradle
+.gradle/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
 .idea/
 *.iml
-dist/
-glsave/
+*.iws
+*.ipr
+out/
+classes/
+
+# NetBeans
+/.nb-gradle/
+.nb*
+nbproject/
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/

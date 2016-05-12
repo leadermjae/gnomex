@@ -10,6 +10,7 @@
     	<!-- General config -->
         <tstamp />
         <property environment="env"  />
+		<property file="${user.home}/.ant/ant-global.properties" />
         <property file="${basedir}/build.properties" />
 
 		<tstamp>
@@ -49,7 +50,7 @@
 		<antcall target="compile" />
 		<antcall target="jar" />
 		<antcall target="clientjar"/>
-    <antcall target="realmjar"/>
+    	<antcall target="realmjar"/>
 		<antcall target="flex"/>
 		<antcall target="war" />
 		<antcall target="deploy" />
@@ -90,6 +91,24 @@
 		<antcall target="clean" />
 		<antcall target="build-opensource-gnomexlite" />
 		<antcall target="deploy-gnomexlite" />
+	</target>
+
+	<!-- ============================================== -->
+	<!--                                                -->
+	<!-- Copy web root                                  -->
+	<!--                                                -->
+	<!-- ============================================== -->
+	<target name="copy-webroot" depends="init">
+		<copy todir="${tomcat.dir}/webapps/${app.name}" overwrite="true">
+			<fileset dir="${webroot.dir}">
+				<include name="*/**"/>
+				<exclude name="tomcat/**" />
+				<exclude name="gnomexlite/**" />
+				<exclude name="app/**"/>
+				<exclude name="getXML.jsp"/>
+				<exclude name="getHTML.jsp"/>
+			</fileset>
+		</copy>
 	</target>
 
 	<!-- ============================================== -->
@@ -360,7 +379,7 @@
 		<replace file="${flexapp.dir}/views/util/FlexAppVersion.as" token="@flexBuildDate@" value="${build.date}" />
 
 		<mxmlc file="${flexapp.dir}/${flexapp.name}.mxml" 
-			output="${build.dir}/${flexapp.name}.swf">
+			output="${build.dir}/${flexapp.name}.swf" target-player="10">
 	        <load-config filename="${FLEX_HOME}/frameworks/flex-config.xml"/>
 	        <source-path path-element="${FLEX_HOME}/frameworks"/>
 			    <compiler.library-path dir="${lib.dir}" append="true">
@@ -465,6 +484,7 @@
 
 		<war destfile="${dist.dir}/${war.name}" webxml="${webroot.dir}/WEB-INF/web.xml">
 			 <metainf dir="${metainf.dir}"          includes="context.xml"/>
+			 <webinf dir="${webroot.dir}/WEB-INF" includes="*.jsp"/>
 			 <lib dir="${lib.dir}"                  includes="*.jar"/>
 			 <lib dir="${lib.env.dir}">
 			   <include name="*.jar"/>
@@ -484,6 +504,7 @@
 			 	<exclude name="WEB-INF/**"/>
 				<exclude name="tomcat/**" />
 				<exclude name="gnomexlite/**" />
+				<exclude name="app/**"/>
 			 	<exclude name="getXML.jsp"/>
 			 	<exclude name="getHTML.jsp"/>
 		 	 </fileset>
@@ -551,10 +572,12 @@
 					</fileset>
 		</copy> 	
 		
-		<!--  Change gnomexFlex.jsp to gnomexLite.jsp -->
-	    <replace file="${webroot.dir}/WEB-INF/web.xml" token="gnomexFlex.jsp" value="gnomexLite.jsp"/>
+		<!-- Change gnomexFlex.jsp to gnomexLite.jsp -->
+		<!-- Make the change in a file copied to the build.dir so we don't have to keep remembering not to commit the changes -->
+    	<copy file="${webroot.dir}/WEB-INF/web.xml"  tofile="${build.dir}/WEB-INF/gnomexlite/web.xml" overwrite="true"/>
+		<replace file="${build.dir}/WEB-INF/gnomexlite/web.xml" token="gnomexFlex.jsp" value="gnomexLite.jsp"/>
     	
-		<war destfile="${dist.dir}/${glwar.name}" webxml="${webroot.dir}/WEB-INF/web.xml">
+		<war destfile="${dist.dir}/${glwar.name}" webxml="${build.dir}/WEB-INF/gnomexlite/web.xml">
 			 <metainf dir="${metainf.dir}"          includes="context.xml"/>
 			 <lib dir="${lib.dir}"                  includes="*.jar"/>
 			 <lib dir="${lib.env.dir}">
