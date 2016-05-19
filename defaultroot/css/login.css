@@ -8,6 +8,18 @@ h3 {
 	margin-top: 0px;
 }
 
+.header-logo {
+	height: 40px;
+	padding-left: 53px;
+}
+
+.header-title {
+	padding-top: 18px;
+	font-weight: bold;
+	font-size: 15px;
+	color: #696969;
+}
+
 .form-signin {
 	padding: 15px;
 	margin: 0 auto;
@@ -16,6 +28,14 @@ h3 {
 
 .login-container {
 	max-width: 378px;
+}
+
+.login-container .header-bar {
+	width: inherit;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	text-align: left;
+	background: transparent url('../images/svg/gnomex_icon1.svg') left no-repeat;
 }
 
 .form-signin .form-signin-heading,
@@ -47,6 +67,12 @@ h3 {
 	border-bottom-left-radius: 0;
 }
 
+.form-reset input[type="text"],
+.form-reset input[type="email"]{
+	margin-bottom: 4px;
+	border-radius: 4px;
+}
+
 .form-signin input[type="password"] {
 	margin-bottom: 10px;
 	border-top-left-radius: 0;
@@ -67,12 +93,15 @@ h3 {
 	width: inherit;
 }
 
-.form-signin-button-block .info-block {
-	width: 70%;
-	float: left;
+.info-block {
 	text-align: left;
 	font-style: italic;
 	font-size: smaller;
+}
+
+.form-signin-button-block .info-block {
+	width: 70%;
+	float: left;
 }
 
 .form-signin-button-block .button-block {
@@ -80,12 +109,12 @@ h3 {
 	float: right;
 }
 
-.form-signin-secondary-buttons {
+.form-signin-secondary-button-block {
 	border-top: 1px solid #cccccc;
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
-	padding: 14px 15px 0px 15px;
+	justify-content: flex-end;
+	padding-right: 7px;
 }
 
 @media(max-width: 360px ) {
@@ -102,10 +131,10 @@ h3 {
 		width: 100%;
 		float: none;
 	}
-	.form-signin-secondary-buttons {
+	.form-signin-secondary-button-block {
 		flex-direction: column;
 	}
-	.form-signin-secondary-buttons a {
+	.form-signin-secondary-button-block a {
 		margin-bottom: 5px;
 	}
 }
@@ -120,7 +149,13 @@ h3 {
 #error {
 	margin: 22px;
 	text-align: center;
-	width: 306px;
+	max-width: inherit;
+}
+
+.campus-info {
+	margin-top: 15px;
+	font-size: small;
+	margin: 2px 13px 2px 15px;
 }
 /****************************************/
 
@@ -142,12 +177,9 @@ table.facilities {
 }
 
 .lookup{
-	padding-top: 20px;
-	float: left;
+	padding-top: 4px;
 	color: #0000EE;
 }
-
-
 
 h3 {
 	font-weight: bold;

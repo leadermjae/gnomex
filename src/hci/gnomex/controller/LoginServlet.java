@@ -25,7 +25,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
 
   private static final Logger LOG = Logger.getLogger(LoginServlet.class);
-  public static final String TARGET_JSP = "/WEB-INF/login.jsp";
+  private static final String TARGET_JSP = "/WEB-INF/login.jsp";
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -157,10 +157,12 @@ public class LoginServlet extends HttpServlet {
       request.setAttribute("siteLogo",siteLogo);
     } catch (Exception e) {
       message = "Cannot obtain property " + PropertyDictionary.UNIVERSITY_USER_AUTHENTICATION + " " + e.toString() + " sess=" + sess;
+      LOG.error(message,e);
     } finally {
       try {
         HibernateSession.closeSession();
       } catch (Exception e) {
+        LOG.error("Error closing Hibernate session.");
       }
     }
     LOG.debug("Dispatching to " + TARGET_JSP);

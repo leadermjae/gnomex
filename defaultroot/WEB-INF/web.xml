@@ -358,12 +358,10 @@
 		<servlet-class>hci.gnomex.controller.LoginServlet</servlet-class>
 	</servlet>
 
-	<servlet-mapping>
-		<servlet-name>LoginServlet</servlet-name>
-		<url-pattern>/login</url-pattern>
-		<url-pattern>/login.jsp</url-pattern>
-	</servlet-mapping>
-
+	<servlet>
+		<servlet-name>ResetPasswordServlet</servlet-name>
+		<servlet-class>hci.gnomex.controller.ResetPasswordServlet</servlet-class>
+	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>GNomExFrontController</servlet-name>
@@ -605,6 +603,19 @@
 		<url-pattern>/FastDataTransferUploadStartServlet.gx</url-pattern>
 	</servlet-mapping>
 
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/login</url-pattern>
+		<url-pattern>/login.jsp</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ResetPasswordServlet</servlet-name>
+		<url-pattern>/reset_password</url-pattern>
+		<url-pattern>/reset_password.jsp</url-pattern>
+	</servlet-mapping>
+
+
 	<!-- Session timeout set to 4 hours -->
 	<session-config>
 		<session-timeout>240</session-timeout>
@@ -816,7 +827,6 @@
 		</auth-constraint>
 	</security-constraint>
 
-
 	<login-config>
 		<auth-method>FORM</auth-method>
 		<form-login-config>
@@ -825,17 +835,9 @@
 		</form-login-config>
 	</login-config>
 
-	<!--
-      <login-config>
-        <auth-method>BASIC</auth-method>
-      </login-config>
-       -->
-
 	<security-role>
 		<role-name>GNomExUser</role-name>
 	</security-role>
-
-
 
 	<resource-ref>
 		<description>Mail Server</description>

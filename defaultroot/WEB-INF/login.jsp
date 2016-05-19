@@ -33,25 +33,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/login.css" type="text/css"/>
-
-    <style type="text/css">
-
-        .header-bar {
-            width: inherit;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-            text-align: left;
-            background: transparent url('images/svg/gnomex_icon1.svg') left no-repeat;
-        }
-
-        .header-logo {
-            height: 40px;
-            padding-left: 53px;
-        }
-
-    </style>
 
     <title>Sign in to GNomEx</title>
 
@@ -68,6 +51,7 @@
 
         <div class="header-bar">
             <img class="header-logo" src="images/svg/gnomex.svg"/>
+            <span class="pull-right header-title">Sign In</span>
         </div>
         <c:if test="${itemNotPublic}">
             <div class="topPanel">
@@ -83,25 +67,30 @@
 
         <div class="form-signin-button-block">
             <div class="info-block">
-                <c:if test="${showCampusInfoLink}">
-                    University of Utah investigators should sign in with their UNID and CIS password.
-                </c:if>
+                <%--<c:if test="${showCampusInfoLink}">--%>
+                    <%--University of Utah investigators should sign in with their UNID and CIS password.--%>
+                <%--</c:if>--%>
             </div>
             <div class="button-block">
                 <input class="btn btn-primary btn-block" type="submit" value="Sign in" title="Click here to Sign In">
             </div>
         </div>
     </form>
-    <div class="form-signin-secondary-buttons">
+    <div class="form-signin-secondary-button-block btn-group btn-group-sm">
         <c:if test="${allowGuest}">
             <!-- Note that guest ignores idCore parameter -- guest just sees all public objects. -->
-            <a href="gnomexGuestFlex.jsp" class="sec-button btn btn-sm btn-default" title="Click here to login as a guest">Guest Login</a>
+            <a href="gnomexGuestFlex.jsp" class="sec-button btn btn-sm btn-link" title="Click here to login as a guest">Guest Login</a>
         </c:if>
-        <a href="reset_password.jsp${idCoreParm}" class="sec-button btn btn-sm btn-default" title="Click here to reset your password">Reset Password</a>
+        <a href="reset_password${idCoreParm}" class="sec-button btn btn-sm btn-link" title="Click here to reset your password">Reset Password</a>
         <c:if test="${showUserSignup}">
-            <a href="select_core.jsp${idCoreParm}" class="sec-button btn btn-sm btn-default" title="Click here to register a new account">New Account</a>
+            <a href="select_core.jsp${idCoreParm}" class="sec-button btn btn-sm btn-link" title="Click here to register a new account">New Account</a>
         </c:if>
     </div>
+    <c:if test="${showCampusInfoLink}">
+    <div class="well well-sm campus-info clearfix">
+        University of Utah investigators should sign in with their UNID and CIS password.
+    </div>
+    </c:if>
     <c:if test="${errFlag.equals('Y')}">
         <div id="error" class="alert alert-danger" role="alert">The <strong>user name</strong> or <strong>password</strong> you entered may be incorrect. Please try again.</div>
     </c:if>
